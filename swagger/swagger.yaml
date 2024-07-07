@@ -1,0 +1,478 @@
+openapi: 3.0.3
+info:
+  title: Booking Ticket API
+  description: |-
+    This is Booking Ticket API specification.
+  contact:
+    email: k2leving@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: 0.0.1
+servers:
+  - url: http://127.0.0.1:8080
+tags:
+  - name: Authentication
+    description: Authentication
+  - name: Event CRUD API
+    description: Event CRUD API
+  - name: Ticket CRUD API
+    description: Ticket CRUD API
+  - name: Booking Ticket API
+    description: Booking Ticket API
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register User Account
+      operationId: registerUserAccount
+      requestBody:
+        description: register input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputRegister"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSuccessPart"
+  /api/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login User Account
+      operationId: loginUserAccount
+      requestBody:
+        description: login input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputLogin"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseLogin"
+
+  /api/events:
+    get:
+      tags:
+        - Event CRUD API
+      summary: Event list
+      description: Event list
+      operationId: getAllEvents
+      security:
+        - bearerAuth: []
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseListEvent"
+  /api/event/{id}:
+    get:
+      tags:
+        - Event CRUD API
+      summary: Event Get One
+      description: Event Get One
+      operationId: getOneEvent
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: "event id"
+          required: true
+          schema:
+            type: integer
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseOneEvent"
+  /api/event:
+    post:
+      tags:
+        - Event CRUD API
+      summary: Event Create
+      description: Event create
+      operationId: createEvent
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: event create input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputCreateEvent"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSuccessPart"
+    put:
+      tags:
+        - Event CRUD API
+      summary: Event Update
+      description: Event update
+      operationId: updateEvent
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: event update input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputUpdateEvent"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSuccessPart"
+    delete:
+      tags:
+        - Event CRUD API
+      summary: Event Delete
+      description: Event delete
+      operationId: deleteEvent
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: event delete input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputDeleteEvent"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSuccessPart"
+
+  /api/event/{event_id}/tickets:
+    get:
+      tags:
+        - Ticket CRUD API
+      summary: Ticket list
+      description: Ticket list
+      operationId: getAllTickets
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: event_id
+          in: path
+          description: "event id"
+          required: true
+          schema:
+            type: integer
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseListTicket"
+  /api/ticket/{id}:
+    get:
+      tags:
+        - Ticket CRUD API
+      summary: Ticket Get One
+      description: Ticket Get One
+      operationId: getOneTicket
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: "ticket id"
+          required: true
+          schema:
+            type: integer
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseOneTicket"
+  /api/ticket:
+    post:
+      tags:
+        - Ticket CRUD API
+      summary: Ticket Create
+      description: Ticket create
+      operationId: createTicket
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: ticket create input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputCreateTicket"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSuccessPart"
+    put:
+      tags:
+        - Ticket CRUD API
+      summary: Ticket Update
+      description: Ticket update
+      operationId: updateTicket
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: ticket update input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputUpdateTicket"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSuccessPart"
+    delete:
+      tags:
+        - Ticket CRUD API
+      summary: Ticket Delete
+      description: Ticket delete
+      operationId: deleteTicket
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: ticket delete input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputDeleteTicket"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSuccessPart"
+
+  /api/ticket/booking-ticket:
+    post:
+      tags:
+        - Booking Ticket API
+      summary: Booking Ticket API
+      description: Booking Ticket API
+      operationId: bookingTicket
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: booking ticket input
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inputBookingTicket"
+      responses:
+        default:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSuccessPart"
+
+components:
+  schemas:
+    responseListEvent:
+      items:
+        allOf:
+          - $ref: "#/components/schemas/itemEvent"
+          - $ref: "#/components/schemas/listPart"
+    responseOneEvent:
+      allOf:
+        - $ref: "#/components/schemas/itemEvent"
+        - $ref: "#/components/schemas/listPart"
+    itemEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "1"
+        name:
+          type: string
+          example: "Concert"
+        description:
+          type: string
+          example: "Concert 2024"
+        ticket_used_quantity:
+          type: integer
+          example: "1"
+        ticket_total_quantity:
+          type: integer
+          example: "10"
+        version:
+          type: integer
+          example: "1"
+    inputCreateEvent:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Concert"
+        description:
+          type: string
+          example: "Concert 2024"
+        ticket_total_quantity:
+          type: integer
+          example: "10"
+    inputUpdateEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "1"
+        name:
+          type: string
+          example: "Concert"
+        description:
+          type: string
+          example: "Concert 2024"
+        ticket_total_quantity:
+          type: integer
+          example: "10"
+    inputDeleteEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "1"
+    responseListTicket:
+      items:
+        allOf:
+          - $ref: "#/components/schemas/itemTicket"
+          - $ref: "#/components/schemas/listPart"
+    responseOneTicket:
+      allOf:
+        - $ref: "#/components/schemas/itemTicket"
+        - $ref: "#/components/schemas/listPart"
+    itemTicket:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "1"
+        serial_number:
+          type: string
+          example: "6M5DOBP6I7DGTJVDSDZ3"
+        booked_by_user_id:
+          type: integer
+          example: "1"
+        event_id:
+          type: integer
+          example: "1"
+    inputCreateTicket:
+      type: object
+      properties:
+        booked_by_user_id:
+          type: integer
+          example: "1"
+        event_id:
+          type: integer
+          example: "1"
+    inputUpdateTicket:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "1"
+        serial_number:
+          type: string
+          example: "6M5DOBP6I7DGTJVDSDZ3"
+        booked_by_user_id:
+          type: integer
+          example: "1"
+        event_id:
+          type: integer
+          example: "1"
+    inputDeleteTicket:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "1"
+    inputRegister:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "User ABC"
+        email:
+          type: string
+          example: "user-abc@email.com"
+        password:
+          type: string
+          example: "P7@aK0y7gmK"
+    inputLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "user-abc@email.com"
+        password:
+          type: string
+          example: "P7@aK0y7gmK"
+    inputBookingTicket:
+      type: object
+      properties:
+        event_id:
+          type: integer
+          example: "1"
+    responseLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "user-abc@email.com"
+        token:
+          type: string
+          example: "3|NUVvN2M48zJIEiWcQjc7PkqNz2ftPJwYHAEMselE3b2ab2e9"
+    responseSuccessPart:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "OK"
+    listPart:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "1"
+        createdAt:
+          type: string
+          example: "2024-12-31 00:00:00"
+        updatedAt:
+          type: string
+          example: "2024-12-31 00:00:00"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
