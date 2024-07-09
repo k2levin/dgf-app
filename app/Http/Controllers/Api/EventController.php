@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\EventTicketQuantityUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\CreateRequest;
 use App\Http\Requests\Event\DeleteRequest;
@@ -51,6 +52,11 @@ class EventController extends Controller
         }, ARRAY_FILTER_USE_KEY);
 
         Event::find($request->id)?->update($updateInputs);
+
+        if (array_key_exists('ticket_used_quantity', $updateInputs) || array_key_exists('ticket_total_quantity', $updateInputs)) {
+            $event = Event::find($request->id);
+            EventTicketQuantityUpdated::dispatch($event);
+        }
 
         return response()->json(['message' => 'OK'], 200);
     }

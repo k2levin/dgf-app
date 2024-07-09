@@ -93,22 +93,22 @@ class BookingTicketTest extends TestCase
         $event = Event::first();
 
         $userA = User::where('role', User::ROLE_USER)->orderBy('id')->first();
-        $loginResponse = Http::acceptJson()->post('http://127.0.0.1:8080/api/auth/login', [
+        $loginResponse = Http::acceptJson()->post(config('app.url').'/api/auth/login', [
             'email' => $userA->email,
             'password' => 'testing123',
         ]);
         $userAToken = $loginResponse->json()['token'];
 
         $userB = User::where('role', User::ROLE_USER)->orderByDesc('id')->first();
-        $loginResponse = Http::acceptJson()->post('http://127.0.0.1:8080/api/auth/login', [
+        $loginResponse = Http::acceptJson()->post(config('app.url').'/api/auth/login', [
             'email' => $userB->email,
             'password' => 'testing123',
         ]);
         $userBToken = $loginResponse->json()['token'];
 
         $responses = Http::pool(fn(Pool $pool) => [
-            $pool->acceptJson()->withToken($userAToken)->post('http://127.0.0.1:8080/api/ticket/booking-ticket', ['event_id' => $event->id, 'x_delay_for_testing_only' => 3]),
-            $pool->acceptJson()->withToken($userBToken)->post('http://127.0.0.1:8080/api/ticket/booking-ticket', ['event_id' => $event->id, 'x_delay_for_testing_only' => 1]),
+            $pool->acceptJson()->withToken($userAToken)->post(config('app.url').'/api/ticket/booking-ticket', ['event_id' => $event->id, 'x_delay_for_testing_only' => 3]),
+            $pool->acceptJson()->withToken($userBToken)->post(config('app.url').'/api/ticket/booking-ticket', ['event_id' => $event->id, 'x_delay_for_testing_only' => 1]),
         ]);
 
         $this->assertEquals(200, $responses[0]->status());

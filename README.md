@@ -8,6 +8,7 @@
 - [x] 5. Ensure that the API responses are consistent and provide meaningful error messages in case of booking conflicts.
 - [x] 6. Write database migration scripts for the required database structure, considering the need for handling concurrency.
 - [x] 7. Use Laravel's form request validation to validate booking data.
+- [x] 8. Demonstrate the use of event broadcasting and listeners for real-time update to clients.
 
 ## Tasks
 - [x] 1. Provide the migration script for the database structure, including any fields necessary for optimistic locking.
@@ -19,8 +20,13 @@
 - [x] - Documentration or a tool like Swagger to demonstrate API usage.
 
 ## Setup Steps
-- tested with PHP 8.1.22 and MySQL version: 8.0.33
+- tested with PHP 8.2.21 and MySQL 8.0.33
+- generate '.env' from '.env.example'
 - `composer install`
 - `php artisan migrate:refresh --seed`
+- `php artisan reverb:start` **
 - `php artisan test`
-- view API Documentation at folder "swagger/index.html"
+- see API Documentation at folder "swagger/index.html"
+- see file "testing_websocket_explain.png" for event broadcasting and listeners for real-time update to clients
+
+- ** Please note that reverb server may need to turn on for the booking ticket API

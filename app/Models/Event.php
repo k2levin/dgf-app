@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\EventTicketQuantityUpdated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -45,5 +46,7 @@ class Event extends Model
         $this->ticket_used_quantity++;
         $this->version++;
         $this->save();
+
+        EventTicketQuantityUpdated::dispatch($this);
     }
 }
